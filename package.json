@@ -1,0 +1,41 @@
+{
+  "name": "@pittica/logger-helpers",
+  "private": false,
+  "version": "0.9.0",
+  "description": "Logger helpers.",
+  "main": "dist/index.js",
+  "scripts": {
+    "clean": "rimraf ./dist",
+    "build": "npm run clean && mkdirp ./dist && babel src --out-dir ./dist --copy-files",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "send": "run-func ./dist/scripts.js send",
+    "build-send": "npm run build && npm run send"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pittica/logger-helpers.git"
+  },
+  "keywords": [
+    "pittica",
+    "logger",
+    "slack"
+  ],
+  "author": "Lucio Benini <lucio.benini@pittica.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/pittica/logger-helpers/issues"
+  },
+  "homepage": "https://github.com/pittica/logger-helpers#README.md",
+  "dependencies": {
+    "@slack/web-api": "^7.0.4",
+    "date-and-time": "^3.3.0",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.24.6",
+    "mkdirp": "^3.0.1",
+    "prettier": "^3.3.0",
+    "rimraf": "^6.0.1",
+    "run-func": "^3.0.0"
+  }
+}
