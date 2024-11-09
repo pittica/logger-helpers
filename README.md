@@ -13,5 +13,5 @@ This project is licensed.
 
 Copyright 2024 **Pittica S.r.l.**.
 
-- [pittica.com](https://www.pittica.com/)
-- [info@pittica.com](mailto:it@pittica.com)
+- [pittica.com](https://pittica.com)
+- [info@pittica.com](mailto:info@pittica.com)
