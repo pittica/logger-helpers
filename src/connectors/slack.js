@@ -13,25 +13,31 @@
 // limitations under the License.
 
 const { WebClient } = require("@slack/web-api")
-const { getDateString } = require("../helpers/format")
-
+const { formatHeader } = require("../helpers/format")
 require("dotenv").config()
 
 /**
  * Writes a message to Slack.
  *
- * @param {string} header Heasder text.
+ * @param {string} header Header text.
  * @param {Array|string} message Message or messages.
- *
+ * @param {string} date Formatted date.
+ * @param {string} senderName Message sender name.
+ * @param {string|null} senderVersion Message sender version.
  * @returns {object} Response object.
  */
-exports.send = async (header, message) => {
+exports.send = async (
+  header,
+  message,
+  date = null,
+  senderName = process?.env?.npm_package_name,
+  senderVersion = null
+) => {
   if (
     process.env.SLACK_TOKEN &&
-    (header !== "Info" || process.env.SLACK_LOG_INFO == 1)
+    (header.toUpperCase() !== "INFO" || process.env.SLACK_LOG_INFO == 1)
   ) {
     const client = new WebClient(process.env.SLACK_TOKEN)
-
     const fields = []
     const messages = Array.isArray(message) ? message : [message]
 
@@ -39,7 +45,7 @@ exports.send = async (header, message) => {
       fields.push({
         type: "plain_text",
         emoji: true,
-        text: text ? text.toString() : header,
+        text: text ? text.toString() : senderName,
       })
     )
 
@@ -51,13 +57,17 @@ exports.send = async (header, message) => {
           type: "header",
           text: {
             type: "plain_text",
-            text: header,
+            text: senderName
+              ? senderVersion
+                ? `${senderName} ${senderVersion}`
+                : senderName
+              : header,
           },
         },
         {
           type: "section",
           text: {
-            text: getDateString(),
+            text: formatHeader(header, date),
             type: "plain_text",
           },
           fields,

@@ -1,4 +1,4 @@
-// Copyright 2024 Pittica S.r.l.
+// Copyright 2024-2025 Pittica S.r.l.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,9 +24,14 @@ exports.getDateString = () => format(new Date(), "YYYY-MM-DD HH:mm:ss")
 /**
  * Formats the message header.
  * @param {string} type Message type.
+ * @param {string|null} date Formatted date.
+ * @param {string|null} sender Message sender.
  * @returns {string} The formatted message header.
  */
-exports.formatHeader = (type) => `[${type} ${this.getDateString()}]`
+exports.formatHeader = (type, date = null, sender = null) =>
+  sender
+    ? `[${type.toUpperCase()}] [${date || this.getDateString()}] [${sender}]`
+    : `[${type.toUpperCase()}] [${date || this.getDateString()}]`
 
 /**
  * Formats the message body.

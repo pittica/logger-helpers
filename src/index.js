@@ -1,4 +1,4 @@
-// Copyright 2024 Pittica S.r.l.
+// Copyright 2024-2025 Pittica S.r.l.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,8 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-const { info, error, success } = require("./helpers/message")
+const { info, error, warn, success } = require("./helpers/message")
 
 exports.info = info
 exports.error = error
+exports.warn = warn
 exports.success = success
