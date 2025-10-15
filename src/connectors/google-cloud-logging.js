@@ -25,6 +25,7 @@ require("dotenv").config()
  * @param {string} senderName Message sender name.
  * @param {string|null} senderVersion Message sender version.
  * @returns {object} Response object.
+ * @since 1.0.0
  */
 exports.send = async (
   header,
@@ -40,7 +41,7 @@ exports.send = async (
     (level !== "INFO" || process.env.GCP_LOG_INFO == 1)
   ) {
     const loggingWinston = new LoggingWinston({
-      logName: senderName,
+      logName: senderName.replace(/^@([^/]+)\//, "$1."),
       labels: {
         name: senderName,
         version: senderVersion,
@@ -50,14 +51,15 @@ exports.send = async (
     const logger = winston.createLogger({
       transports: [loggingWinston],
     })
+    const meta = { message, sender: senderName }
 
     switch (level) {
       case "ERROR":
-        logger.error(message, { date })
+        logger.error(message, meta)
       case "WARN":
-        logger.warn(message, { date })
+        logger.warn(message, meta)
       default:
-        logger.info(message, { date })
+        logger.info(message, meta)
     }
 
     return { message, date }
