@@ -28,15 +28,15 @@
   "homepage": "https://github.com/pittica/logger-helpers#README.md",
   "dependencies": {
     "@google-cloud/logging-winston": "^6.0.1",
-    "@slack/web-api": "^7.11.0",
-    "date-and-time": "^4.1.0",
+    "@slack/web-api": "^7.13.0",
+    "date-and-time": "^4.1.2",
     "dotenv": "^17.2.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.28.3",
     "mkdirp": "^3.0.1",
-    "prettier": "^3.6.2",
-    "rimraf": "^6.0.1",
+    "prettier": "^3.7.4",
+    "rimraf": "^6.1.2",
     "run-func": "^3.0.0"
   }
 }
