@@ -5,7 +5,13 @@
 ![GitHub top language](https://img.shields.io/github/languages/top/pittica/logger-helpers)
 [![NPM Version](https://img.shields.io/npm/v/%40pittica%2Flogger-helpers)](https://www.npmjs.com/package/@pittica/logger-helpers)
 
-Logger helpers for Node.
+Logger helpers for [Node.js](https://nodejs.org/).
+
+## Overview
+
+Supports:
+- [Google Cloud Logging](https://cloud.google.com/logging)
+- [Slack](https://slack.com/)
 
 ## Copyright
 
