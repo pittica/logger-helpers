@@ -1,7 +1,7 @@
 {
   "name": "@pittica/logger-helpers",
   "private": false,
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Logger helpers.",
   "main": "dist/index.js",
   "scripts": {
