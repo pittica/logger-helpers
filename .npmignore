@@ -15,3 +15,4 @@ src
 .prettierignore
 .prettierrc
 .env.sample
+.env
