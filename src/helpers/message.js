@@ -32,7 +32,8 @@ exports.LEVEL = {
  * @param {string} message Message text.
  * @returns {string} Message text.
  */
-exports.info = (message) => this.send(message, this.LEVEL.INFO, console.info)
+exports.info = (message) =>
+  exports.send(message, exports.LEVEL.INFO, console.info)
 
 /**
  * Sends the given message as error.
@@ -40,7 +41,8 @@ exports.info = (message) => this.send(message, this.LEVEL.INFO, console.info)
  * @param {string} message Message text.
  * @returns {string} Message text.
  */
-exports.error = (message) => this.send(message, this.LEVEL.ERROR, console.error)
+exports.error = (message) =>
+  exports.send(message, exports.LEVEL.ERROR, console.error)
 
 /**
  * Sends the given message as warning.
@@ -48,7 +50,8 @@ exports.error = (message) => this.send(message, this.LEVEL.ERROR, console.error)
  * @param {string} message Message text.
  * @returns {string} Message text.
  */
-exports.warn = (message) => this.send(message, this.LEVEL.WARN, console.warn)
+exports.warn = (message) =>
+  exports.send(message, exports.LEVEL.WARN, console.warn)
 
 /**
  * Sends the given message as success.
@@ -56,7 +59,7 @@ exports.warn = (message) => this.send(message, this.LEVEL.WARN, console.warn)
  * @param {string} message Message text.
  * @returns {string} Message text.
  */
-exports.success = (message) => this.send(message, this.LEVEL.SUCCCESS)
+exports.success = (message) => exports.send(message, exports.LEVEL.SUCCCESS)
 
 /**
  * Sends the given message
@@ -70,12 +73,13 @@ exports.success = (message) => this.send(message, this.LEVEL.SUCCCESS)
  */
 exports.send = (
   message,
-  level = this.LEVEL.INFO,
+  level = exports.LEVEL.INFO,
   func = console.log,
   senderName = process?.env?.npm_package_name,
   senderVersion = process?.env?.npm_package_version
 ) => {
   const date = getDateString()
+
   func(
     formatHeader(level, date, senderName, senderVersion),
     formatBody(message)
@@ -84,10 +88,11 @@ exports.send = (
     .send(level, message, date, senderName, senderVersion)
     .catch(({ data: { error } }) =>
       func(
-        formatHeader(this.LEVEL.ERROR, date, senderName, senderVersion),
+        formatHeader(exports.LEVEL.ERROR, date, senderName, senderVersion),
         formatBody(["Slack", error])
       )
     )
   googleCloudLogging.send(level, message, date, senderName, senderVersion)
+
   return message
 }

@@ -1,7 +1,7 @@
 {
   "name": "@pittica/logger-helpers",
   "private": false,
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Logger helpers.",
   "main": "dist/index.js",
   "scripts": {
@@ -33,7 +33,7 @@
     "dotenv": "^17.2.3"
   },
   "devDependencies": {
-    "@babel/cli": "^7.28.3",
+    "@babel/cli": "^7.28.6",
     "mkdirp": "^3.0.1",
     "prettier": "^3.7.4",
     "rimraf": "^6.1.2",

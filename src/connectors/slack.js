@@ -17,6 +17,21 @@ const { formatHeader } = require("../helpers/format")
 require("dotenv").config()
 
 /**
+ * Tests the Slack client and credentials.
+ *
+ * @param {WebClient} client Slack API client.
+ * @returns {boolean} A value indicating whether the clients and credentials are correct.
+ */
+exports.test = async (client) => {
+  try {
+    const { ok } = await client.auth.test()
+    return ok
+  } catch (error) {
+    return false
+  }
+}
+
+/**
  * Writes a message to Slack.
  *
  * @param {string} header Header text.
@@ -38,42 +53,45 @@ exports.send = async (
     (header.toUpperCase() !== "INFO" || process.env.SLACK_LOG_INFO == 1)
   ) {
     const client = new WebClient(process.env.SLACK_TOKEN)
-    const fields = []
-    const messages = Array.isArray(message) ? message : [message]
 
-    messages.forEach((text) =>
-      fields.push({
-        type: "plain_text",
-        emoji: true,
-        text: text ? text.toString() : senderName,
+    if (exports.test(client)) {
+      const fields = []
+      const messages = Array.isArray(message) ? message : [message]
+
+      messages.forEach((text) =>
+        fields.push({
+          type: "plain_text",
+          emoji: true,
+          text: text ? text.toString() : senderName,
+        })
+      )
+
+      return await client.chat.postMessage({
+        text: message,
+        channel: process.env.SLACK_CHANNEL_ID,
+        blocks: [
+          {
+            type: "header",
+            text: {
+              type: "plain_text",
+              text: senderName
+                ? senderVersion
+                  ? `${senderName} ${senderVersion}`
+                  : senderName
+                : header,
+            },
+          },
+          {
+            type: "section",
+            text: {
+              text: formatHeader(header, date),
+              type: "plain_text",
+            },
+            fields,
+          },
+        ],
       })
-    )
-
-    return await client.chat.postMessage({
-      text: message,
-      channel: process.env.SLACK_CHANNEL_ID,
-      blocks: [
-        {
-          type: "header",
-          text: {
-            type: "plain_text",
-            text: senderName
-              ? senderVersion
-                ? `${senderName} ${senderVersion}`
-                : senderName
-              : header,
-          },
-        },
-        {
-          type: "section",
-          text: {
-            text: formatHeader(header, date),
-            type: "plain_text",
-          },
-          fields,
-        },
-      ],
-    })
+    }
   }
 
   return null

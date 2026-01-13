@@ -30,8 +30,8 @@ exports.getDateString = () => format(new Date(), "YYYY-MM-DD HH:mm:ss")
  */
 exports.formatHeader = (type, date = null, sender = null) =>
   sender
-    ? `[${type.toUpperCase()}] [${date || this.getDateString()}] [${sender}]`
-    : `[${type.toUpperCase()}] [${date || this.getDateString()}]`
+    ? `[${type.toUpperCase()}] [${date || exports.getDateString()}] [${sender}]`
+    : `[${type.toUpperCase()}] [${date || exports.getDateString()}]`
 
 /**
  * Formats the message body.
