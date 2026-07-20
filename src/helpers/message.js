@@ -15,6 +15,7 @@
 const { formatHeader, formatBody, getDateString } = require("./format")
 const slack = require("../connectors/slack")
 const googleCloudLogging = require("../connectors/google-cloud-logging")
+const smtp = require("../connectors/smtp")
 
 /**
  * Log levels.
@@ -90,6 +91,14 @@ exports.send = (
       func(
         formatHeader(exports.LEVEL.ERROR, date, senderName, senderVersion),
         formatBody(["Slack", error])
+      )
+    )
+  smtp
+    .send(level, message, date, senderName, senderVersion)
+    .catch(({ data: { error } }) =>
+      func(
+        formatHeader(exports.LEVEL.ERROR, date, senderName, senderVersion),
+        formatBody(["SMTP", error])
       )
     )
   googleCloudLogging.send(level, message, date, senderName, senderVersion)
