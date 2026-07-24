@@ -13,8 +13,10 @@
 // limitations under the License.
 
 const { info, error, warn, success } = require("./helpers/message")
+const { send: sendEmail } = require("./helpers/email")
 
 exports.info = info
 exports.error = error
 exports.warn = warn
 exports.success = success
+exports.sendEmail = send

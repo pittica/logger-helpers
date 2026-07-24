@@ -13,8 +13,6 @@
 // limitations under the License.
 
 const { formatHeader, formatBody, getDateString } = require("./format")
-const slack = require("../connectors/slack")
-const googleCloudLogging = require("../connectors/google-cloud-logging")
 const smtp = require("../connectors/smtp")
 const logLevel = require("../log/log-level")
 
@@ -24,7 +22,7 @@ const logLevel = require("../log/log-level")
  * @param {string} message Message text.
  * @returns {string} Message text.
  */
-exports.info = (message) => exports.send(message, logLevel.INFO, console.info)
+exports.info = (message) => exports.send(message, logLevel.INFO)
 
 /**
  * Sends the given message as error.
@@ -32,8 +30,7 @@ exports.info = (message) => exports.send(message, logLevel.INFO, console.info)
  * @param {string} message Message text.
  * @returns {string} Message text.
  */
-exports.error = (message) =>
-  exports.send(message, logLevel.ERROR, console.error)
+exports.error = (message) => exports.send(message, logLevel.ERROR)
 
 /**
  * Sends the given message as warning.
@@ -41,7 +38,7 @@ exports.error = (message) =>
  * @param {string} message Message text.
  * @returns {string} Message text.
  */
-exports.warn = (message) => exports.send(message, logLevel.WARN, console.warn)
+exports.warn = (message) => exports.send(message, logLevel.WARN)
 
 /**
  * Sends the given message as success.
@@ -56,7 +53,6 @@ exports.success = (message) => exports.send(message, logLevel.SUCCCESS)
  *
  * @param {string} message Message text.
  * @param {string} level Message level.
- * @param {function} func Log function.
  * @param {string} senderName Message sender name.
  * @param {string} senderVersion Message sender version.
  * @returns {string} Message text.
@@ -64,25 +60,11 @@ exports.success = (message) => exports.send(message, logLevel.SUCCCESS)
 exports.send = (
   message,
   level = logLevel.INFO,
-  func = console.log,
   senderName = process?.env?.npm_package_name,
   senderVersion = process?.env?.npm_package_version
 ) => {
   const date = getDateString()
 
-  func(
-    formatHeader(level, date, senderName, senderVersion),
-    formatBody(message)
-  )
-
-  slack
-    .send(level, message, date, senderName, senderVersion)
-    .catch(({ data: { error } }) =>
-      console.error(
-        formatHeader(logLevel.ERROR, date, senderName, senderVersion),
-        formatBody(["Slack", error])
-      )
-    )
   smtp
     .send(level, message, date, senderName, senderVersion)
     .catch(({ data: { error } }) =>
@@ -91,7 +73,6 @@ exports.send = (
         formatBody(["SMTP", error])
       )
     )
-  googleCloudLogging.send(level, message, date, senderName, senderVersion)
 
   return message
 }

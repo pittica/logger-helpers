@@ -35,7 +35,7 @@ exports.formatHeader = (type, date = null, sender = null) =>
 
 /**
  * Formats the message body.
- * @param {*} message Message or an array of messages.
+ * @param {Array|string} message Message or an array of messages.
  * @returns {string} The formatted message body.
  */
 exports.formatBody = (message) =>

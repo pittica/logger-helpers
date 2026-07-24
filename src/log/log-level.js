@@ -12,19 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-const { info } = require("./helpers/message")
-const { send } = require("./helpers/email")
+/**
+ * Log "Info" level.
+ */
+exports.INFO = "Info"
 
 /**
- * Sends a message.
- *
- * @param {string} message Message.
+ * Log "Error" level.
  */
-exports.send = (message) => info(message)
+exports.ERROR = "Error"
 
 /**
- * Sends an e-mail message.
- *
- * @param {string} message Message.
+ * Log "Warn" level.
  */
-exports.sendEmail = (message) => send(message)
+exports.WARN = "Warn"
+
+/**
+ * Log "Success" level.
+ */
+exports.SUCCESS = "Success"
